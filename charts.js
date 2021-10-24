@@ -54,34 +54,55 @@ function buildMetadata(sample) {
 }
 
 // 1. Create the buildCharts function.
-function buildCharts(sample) {
+function buildCharts(clientID) {
   // 2. Use d3.json to load and retrieve the samples.json file 
   d3.json("samples.json").then((data) => {
     // 3. Create a variable that holds the samples array. 
+    var samples = data.samples;
+    // console.log(samples)
 
     // 4. Create a variable that filters the samples for the object with the desired sample number.
+    var filteredSamples = samples.filter(sample => sample.id == clientID)[0];
+    // console.log(filteredSamples);
 
     //  5. Create a variable that holds the first sample in the array.
-
+    //  Step 5 completed using array index in step 4
 
     // 6. Create variables that hold the otu_ids, otu_labels, and sample_values.
-
+    var otuIDArr = filteredSamples.otu_ids;
+    var otuLabelArr = filteredSamples.otu_labels;
+    var sampleValuesArr = filteredSamples.sample_values;
+    var cleanLabels = otuLabelArr.map(elem => elem.split(";").join(" "));
+    // console.log(cleanLabels);
+    // console.log("id: " + otuIDArr);
+    // console.log("label: " + otuLabelArr);
+    // console.log("value: " + sampleValuesArr);
 
     // 7. Create the yticks for the bar chart.
     // Hint: Get the the top 10 otu_ids and map them in descending order  
     //  so the otu_ids with the most bacteria are last. 
 
-    var yticks = 
+    var yticks = otuIDArr.slice(0,10).reverse().map(elem => "OTU " + elem);
+    // console.log(yticks);
 
     // 8. Create the trace for the bar chart. 
-    var barData = [
-      
-    ];
+    var barData = [{
+      y: yticks,
+      x: sampleValuesArr.slice(0,10).reverse(),
+      text: cleanLabels.slice(0,10).reverse(),
+      type: "bar",
+      orientation: "h"
+      // labels: otuLabelArr.slice(0,10).reverse()
+    }];
     // 9. Create the layout for the bar chart. 
     var barLayout = {
-     
+      title: {
+        text: "<b>Top 10 Cultures - ClientID: " + clientID + "</b>",
+        y: .85,
+        x: .81
+      }
     };
     // 10. Use Plotly to plot the data with the layout. 
-    
+    Plotly.newPlot("bar", barData, barLayout);
   });
 }
