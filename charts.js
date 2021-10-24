@@ -104,5 +104,29 @@ function buildCharts(clientID) {
     };
     // 10. Use Plotly to plot the data with the layout. 
     Plotly.newPlot("bar", barData, barLayout);
+    console.log(sampleValuesArr.length)
+    
+    // // DELIVERABLE 2
+    // 1. Create the trace for the bubble chart.
+    var bubbleData = [{
+      x: otuIDArr,
+      y: sampleValuesArr,
+      text: cleanLabels,
+      mode: "markers",
+      marker: {
+        size: sampleValuesArr.map(elem => elem * .8),
+        color: otuIDArr,
+        colorscale: "Earth",
+        type: "heatmap"
+      }
+    }];
+
+    // 2. Create the layout for the bubble chart.
+    var bubbleLayout = {
+      
+    };
+
+    // 3. Use Plotly to plot the data with the layout.
+    Plotly.newPlot("bubble", bubbleData); 
   });
 }
