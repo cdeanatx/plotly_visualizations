@@ -97,9 +97,8 @@ function buildCharts(clientID) {
     // 9. Create the layout for the bar chart. 
     var barLayout = {
       title: {
-        text: "<b>Top 10 Cultures - ClientID: " + clientID + "</b>",
-        y: .85,
-        x: .81
+        text: "<b>Top 10 Cultures - Client: " + clientID + "</b>",
+        y: .85
       }
     };
     // 10. Use Plotly to plot the data with the layout. 
@@ -123,10 +122,12 @@ function buildCharts(clientID) {
 
     // 2. Create the layout for the bubble chart.
     var bubbleLayout = {
-      
+      title: "<b>Bacteria Cultures per Sample</b><br>Client: " + clientID,
+      xaxis: {title: "OTU ID"},
+      hovermode: "x+y"
     };
 
     // 3. Use Plotly to plot the data with the layout.
-    Plotly.newPlot("bubble", bubbleData); 
+    Plotly.newPlot("bubble", bubbleData, bubbleLayout); 
   });
 }
