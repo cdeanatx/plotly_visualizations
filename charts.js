@@ -103,7 +103,7 @@ function buildCharts(clientID) {
     };
     // 10. Use Plotly to plot the data with the layout. 
     Plotly.newPlot("bar", barData, barLayout);
-    console.log(sampleValuesArr.length)
+    // console.log(sampleValuesArr.length)
     
     // // DELIVERABLE 2
     // 1. Create the trace for the bubble chart.
@@ -128,6 +128,39 @@ function buildCharts(clientID) {
     };
 
     // 3. Use Plotly to plot the data with the layout.
-    Plotly.newPlot("bubble", bubbleData, bubbleLayout); 
+    Plotly.newPlot("bubble", bubbleData, bubbleLayout);
+    
+    // DELVERABLE 3
+    // 4. Create the trace for the gauge chart.
+    var washFreq = parseFloat(data.metadata.filter(elem => elem.id == clientID)[0].wfreq);
+    // console.log(washFreq);
+    
+    var gaugeData = [{
+      domain: { x: [0, 1], y: [0,1] },
+      value: washFreq,
+      title: "<b>Belly Button Washing Frequency</b><br>Scrubs per Week",
+      type: "indicator",
+      mode: "gauge+number",
+      // delta: { reference: 8 },
+      gauge: { 
+        axis: {range: [null, 10], dtick: 2},
+        bar: {color: "black"},
+        steps: [
+          {range: [0, 2], color: "red"},
+          {range: [2, 4], color: "orange"},
+          {range: [4, 6], color: "yellow"},
+          {range: [6, 8], color: "lightgreen"},
+          {range: [8, 10], color: "green"}
+        ]
+      }
+    }];
+    
+    // 5. Create the layout for the gauge chart.
+    var gaugeLayout = { 
+
+    };
+
+    // 6. Use Plotly to plot the gauge data and layout.
+    Plotly.newPlot("gauge", gaugeData);
   });
 }
